@@ -1,0 +1,26 @@
+.wrapper {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(1fr, 3);
+  grid-template-areas: "header header header"
+    "content content sidebar";
+}
+
+.header {
+  grid-area: header;
+  width: 100%;
+  min-height: 10px;
+  background-color: red;
+}
+
+.content {
+  grid-area: content;
+  height: 100%;
+  background-color: green;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  height: 100%;
+  background-color: blue;
+}
