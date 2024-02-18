@@ -1,1 +1,9 @@
-<p>sidebar works!</p>
+<div>
+  <h1>Zoom: {{controls.zoom}}</h1>
+</div>
+<button (click)="increaseZoom()">+</button>
+<button (click)="decreaseZoom()">-</button>
+<br>
+<input type="text" [(ngModel)]="controls.center.lat">
+<input type="text" [(ngModel)]="controls.center.lng">
+<button (click)="updateCenter(controls.center.lat, controls.center.lng)">√</button>

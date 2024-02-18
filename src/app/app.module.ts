@@ -8,12 +8,13 @@ import { MapComponent } from './map/map.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { AppComponent } from './app.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [AppComponent, TestComponent, InputComponent, MapComponent, SidebarComponent],
   imports: [
-    CommonModule, RouterOutlet, BrowserModule, LeafletModule
+    CommonModule, RouterOutlet, BrowserModule, LeafletModule, FormsModule
   ],
   bootstrap: [
     AppComponent
