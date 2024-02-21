@@ -7,3 +7,8 @@
 <input type="text" [(ngModel)]="controls.center.lat">
 <input type="text" [(ngModel)]="controls.center.lng">
 <button (click)="updateCenter(controls.center.lat, controls.center.lng)">√</button>
+<br>
+<button (click)="flyToCity('rehovot')">Rehovot</button>
+<button (click)="flyToCity('yavne')">Yavne</button>
+<button (click)="flyToCity('petach_tikva')">Petah Tikva</button>
+<button (click)="flyToCity('jerusalem')">Jerusalem</button>

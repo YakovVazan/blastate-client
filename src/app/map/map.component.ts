@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { circle, latLng, polygon, tileLayer } from 'leaflet';
+import { Map, latLng, tileLayer } from 'leaflet';
 import { MapService } from '../_services/map.service';
+import { HeatmapService } from '../_services/heatmap.service';
 
 @Component({
   selector: 'app-map',
@@ -8,25 +9,24 @@ import { MapService } from '../_services/map.service';
   styleUrl: './map.component.css'
 })
 export class MapComponent {
-  controls = this.mapService.controls
+  constructor(
+    private mapService: MapService,
+    private heatmapService: HeatmapService
+  ) { }
 
-  constructor(private mapService: MapService) { }
+  controls = this.mapService.controls
+  layersControl = this.mapService.layersControl
 
   options = {
     layers: [
-      tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18 })
+      tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18 }),
+      this.heatmapService.heatmapLayer
     ],
     zoom: 15,
-    center: latLng(32.0788043, 34.8778926)
+    center: latLng(32.0788043, 34.8778926, 17.87)
   }
-  layersControl = {
-    baseLayers: {
-      "openstreetmap": tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18 }),
-      "opencyclemap": tileLayer("https://{s}.tile.opencyclemap.org/{z}/{x}/{y}.png", { maxZoom: 18 })
-    },
-    overlays: {
-      "big circle": circle([32.07, 34.87], { radius: 100, color: "red" }),
-      "square": polygon([[32.07, 34.87], [32.15, 34.87], [32.15, 34.53], [32.07, 34.53]])
-    }
+
+  onMapReady(map: Map) {
+    this.mapService.onMapReady(map, this.heatmapService.heatmapLayer)
   }
 }
