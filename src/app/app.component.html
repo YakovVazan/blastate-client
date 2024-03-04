@@ -1,5 +1,7 @@
-<div class="wrapper">
-  <div class="header"></div>
-  <app-map class="content"></app-map>
-  <app-sidebar class="sidebar"></app-sidebar>
+<div class="header">
+  <nav>
+    <a *ngIf="!isLoginPage()" routerLink="/">login</a>
+    <a *ngIf="isLoginPage()" routerLink="/map" routerLinkActive="true">map</a>
+  </nav>
 </div>
+<router-outlet></router-outlet>

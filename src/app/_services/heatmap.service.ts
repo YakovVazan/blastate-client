@@ -12,5 +12,5 @@ export class HeatmapService {
     radius: 25, gradient: {
       0.2: 'yellow', 0.5: 'orange', 1: 'red'
     }
-  })
+  })  
 }

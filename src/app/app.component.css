@@ -1,26 +1,15 @@
-.wrapper {
-  display: grid;
-  width: 100%;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-areas: "header header header"
-    "content content sidebar";
-}
-
 .header {
-  grid-area: header;
-  width: 100%;
-  min-height: 10px;
-  background-color: red;
+  height: 50px;
+  background-color: rgb(122, 132, 142);
 }
 
-.content {
-  grid-area: content;
-  height: 100%;
-  background-color: green;
+nav {
+  height: inherit;
+  display: flex;
+  padding: 0 1em 0 1em;
+  align-items: center;
 }
 
-.sidebar {
-  grid-area: sidebar;
-  height: 100%;
-  background-color: blue;
+a {
+  color: white;
 }

@@ -1,0 +1,21 @@
+<div class="auth-card-container">
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title mb-3">login to real blastate</h5>
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control border-secondary" id="floatingUsername" placeholder="Name" autofocus
+          (input)="setUsername($event)">
+        <label for="floatingUsername">name</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control border-secondary" id="floatingPassword" placeholder="password" autofocus
+          (input)="setPassword($event)">
+        <label for="floatingPassword">password</label>
+      </div>
+      <hr>
+      <div class="buttons-container">
+        <div class="btn btn-outline-primary" (click)="login()">login</div>
+      </div>
+    </div>
+  </div>
+</div>

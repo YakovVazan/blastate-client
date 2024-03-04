@@ -1,0 +1,31 @@
+#zoom-info {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.reset-map {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.dropdown-menu {
+    max-height: 10em;
+    overflow-y: scroll;
+    padding: 0;
+}
+
+.city-item-dropdown {
+    padding: 0.4em;
+    border-bottom: 1px solid #bcbcbc;
+}
+
+.filtered-cities-dropdown {
+    width: 100%;
+}
+
+button {
+    display: flex;
+    align-items: center;
+}

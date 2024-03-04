@@ -1,0 +1,15 @@
+.content {
+  display: flex;
+}
+
+.map {
+  flex: 2;
+}
+
+.sidebar {
+  flex: 1;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
