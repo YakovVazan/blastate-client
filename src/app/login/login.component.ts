@@ -8,18 +8,17 @@ import { Component } from '@angular/core';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  username: string = '';
-  password: string = '';
+  userDetails: { [key: string]: any } = {};
 
   setUsername(e: Event): void {
-    this.username = (e.target as HTMLInputElement).value;
+    this.userDetails['username'] = (e.target as HTMLInputElement).value;
   }
 
   setPassword(e: Event): void {
-    this.password = (e.target as HTMLInputElement).value;
+    this.userDetails['password'] = (e.target as HTMLInputElement).value;
   }
 
   login() {
-    console.log(this.username, this.password);
+    console.log(this.userDetails);
   }
 }

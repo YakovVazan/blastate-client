@@ -8,10 +8,9 @@ import { Observable } from 'rxjs';
 export class CitiesService {
   constructor(private http: HttpClient) {}
 
-  getCities(country: string): Observable<any> {
-    return this.http.post<any>(
-      'https://countriesnow.space/api/v0.1/countries/cities',
-      { country }
+  getCities(): Observable<any> {
+    return this.http.get(
+      'https://data.gov.il/api/3/action/datastore_search?resource_id=d4901968-dad3-4845-a9b0-a57d027f11ab'
     );
   }
 }

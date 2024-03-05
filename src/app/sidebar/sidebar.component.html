@@ -1,4 +1,32 @@
 <div id="upper-sidebar">
+  <!-- zoom -->
+  <div class="input-group mb-3">
+    <button (click)="increaseZoom()" class="btn btn-outline-secondary">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-zoom-in"
+        viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11M13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0" />
+        <path
+          d="M10.344 11.742q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1 6.5 6.5 0 0 1-1.398 1.4z" />
+        <path fill-rule="evenodd"
+          d="M6.5 3a.5.5 0 0 1 .5.5V6h2.5a.5.5 0 0 1 0 1H7v2.5a.5.5 0 0 1-1 0V7H3.5a.5.5 0 0 1 0-1H6V3.5a.5.5 0 0 1 .5-.5" />
+      </svg>
+    </button>
+    <span id="zoom-info" class="input-group-text border-secondary text-secondary">
+      <span>Zoom: {{controls.zoom}}</span>
+    </span>
+    <button (click)="decreaseZoom()" class="btn btn-outline-secondary">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-zoom-out"
+        viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11M13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0" />
+        <path
+          d="M10.344 11.742q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1 6.5 6.5 0 0 1-1.398 1.4z" />
+        <path fill-rule="evenodd" d="M3 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5" />
+      </svg>
+    </button>
+  </div>
+
   <!-- latitude and longitude -->
   <div class="input-group mb-3">
     <div class="form-floating">
@@ -27,10 +55,10 @@
     <div class="form-floating">
       <input type="text" class="form-control border-secondary dropdown-toggle" id="floatingCityName"
         data-bs-toggle="dropdown" aria-expanded="false" placeholder="City name" [value]="currentCity"
-        (input)="handleCitiesDropDownList($event)" [disabled]="cities.length === 0">
+        (input)="handleCitiesDropDownList($event)" [disabled]="enCities.length === 0">
       <label for="floatingCityName">City name</label>
-      <ul class="filtered-cities-dropdown dropdown-menu dropdown-menu-end {{filteredCities.length === 0 && 'd-none'}}">
-        <li class="city-item-dropdown" *ngFor="let city of filteredCities">
+      <ul class="filtered-cities-dropdown dropdown-menu dropdown-menu-end {{enFilteredCities.length === 0 && 'd-none'}}">
+        <li class="city-item-dropdown" *ngFor="let city of enFilteredCities">
           <button class="dropdown-item" type="button" (click)="flyToCity(city)">{{ city }}</button>
         </li>
       </ul>
@@ -43,40 +71,12 @@
       </svg>
     </button>
   </div>
-
-  <!-- reset -->
-  <button class="btn btn-outline-secondary reset-map" (click)="resetMap()">
-    <span>reset</span>
-  </button>
   <hr>
 </div>
 
 <div id="lower-sidebar">
-  <!-- zoom -->
-  <div class="input-group">
-    <button (click)="increaseZoom()" class="btn btn-outline-secondary">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-zoom-in"
-        viewBox="0 0 16 16">
-        <path fill-rule="evenodd"
-          d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11M13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0" />
-        <path
-          d="M10.344 11.742q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1 6.5 6.5 0 0 1-1.398 1.4z" />
-        <path fill-rule="evenodd"
-          d="M6.5 3a.5.5 0 0 1 .5.5V6h2.5a.5.5 0 0 1 0 1H7v2.5a.5.5 0 0 1-1 0V7H3.5a.5.5 0 0 1 0-1H6V3.5a.5.5 0 0 1 .5-.5" />
-      </svg>
-    </button>
-    <span id="zoom-info" class="input-group-text border-secondary text-secondary">
-      <span>Zoom: {{controls.zoom}}</span>
-    </span>
-    <button (click)="decreaseZoom()" class="btn btn-outline-secondary">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-zoom-out"
-        viewBox="0 0 16 16">
-        <path fill-rule="evenodd"
-          d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11M13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0" />
-        <path
-          d="M10.344 11.742q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1 6.5 6.5 0 0 1-1.398 1.4z" />
-        <path fill-rule="evenodd" d="M3 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5" />
-      </svg>
-    </button>
-  </div>
+  <!-- reset -->
+  <button class="btn btn-outline-secondary reset-map" (click)="resetMap()">
+    <span>reset</span>
+  </button>
 </div>

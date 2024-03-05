@@ -1,8 +1,9 @@
+import { latLng } from 'leaflet';
 import { Component, OnInit } from '@angular/core';
 import { MapService } from '../_services/map.service';
-import { CitiesService } from '../_services/cities.service';
 import { LocationService } from '../_services/location.service';
-import { latLng } from 'leaflet';
+import { SynthesisService } from '../_services/synthesis.service';
+import { SynthesisData } from '../_interfaces/synthesis-data';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,37 +11,25 @@ import { latLng } from 'leaflet';
   styleUrl: './sidebar.component.css',
 })
 export class SidebarComponent implements OnInit {
-  cities: [] = [];
-  filteredCities: string[] = [];
+  synthesizedData: SynthesisData[] = [];
+  enCities: string[] = [];
+  enFilteredCities: string[] = [];
   currentCity: string = '';
   controls = this.mapService.controls;
 
   constructor(
     private mapService: MapService,
-    private citiesService: CitiesService,
-    private locationService: LocationService
+    private locationService: LocationService,
+    private synthesisService: SynthesisService
   ) {}
 
   ngOnInit(): void {
-    this.citiesService.getCities('Israel').subscribe({
-      next: (data) => {
-        this.filteredCities = this.cities = data.data.map((city: string) =>
-          city.charAt(0) === '`' ? city.substring(1) : city
-        );
-      },
-      error: (error) => {
-        console.error('Error:', error);
-      },
+    this.synthesisService.getSynthesizedData().subscribe((synthesizedData) => {
+      this.synthesizedData = synthesizedData;
+      this.enFilteredCities = this.enCities = synthesizedData.map(
+        (city: { [key: string]: any }) => city['en'].trim()
+      );
     });
-  }
-
-  handleCitiesDropDownList(event: Event): void {
-    const inputElement = event.target as HTMLInputElement;
-    const inputValue = inputElement.value;
-
-    this.filteredCities = this.cities.filter((city: string) =>
-      city.toLowerCase().includes(inputValue.toLowerCase().trim())
-    );
   }
 
   updateCenter(x: number, y: number) {
@@ -56,11 +45,23 @@ export class SidebarComponent implements OnInit {
   }
 
   flyToCity(city: string) {
+    console.log(this.synthesizedData.find((data) => data.en == city));
     this.currentCity = city;
+    this.enFilteredCities = [this.currentCity];
     this.mapService.flyToCity(city);
   }
 
+  handleCitiesDropDownList(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const inputValue = inputElement.value;
+
+    this.enFilteredCities = this.enCities.filter((city: string) =>
+      city.toLowerCase().includes(inputValue.toLowerCase().trim())
+    );
+  }
+
   goToCoords() {
+    this.currentCity = 'Your location';
     this.locationService
       .getLocation()
       .then((position) =>
@@ -73,6 +74,8 @@ export class SidebarComponent implements OnInit {
 
   resetMap() {
     this.currentCity = '';
+    this.enFilteredCities = this.enCities;
+
     this.mapService.controls.zoom = 5;
     this.mapService.controls.center = latLng(32.0788043, 34.8778926);
   }
