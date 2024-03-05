@@ -11,7 +11,7 @@ import { HeatmapService } from '../_services/heatmap.service';
 export class MapComponent {
   constructor(
     private mapService: MapService,
-    private heatmapService: HeatmapService,
+    private heatmapService: HeatmapService
   ) {}
 
   controls = this.mapService.controls;
@@ -29,6 +29,6 @@ export class MapComponent {
   };
 
   onMapReady(map: Map) {
-    this.mapService.onMapReady(map, this.heatmapService.heatmapLayer);
+    this.mapService.onMapReady(map);
   }
 }

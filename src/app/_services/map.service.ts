@@ -60,12 +60,7 @@ export class MapService {
     this.map?.flyTo(latLng(lat, lon), 13);
   }
 
-  onMapReady(map: Map, layer: any) {
+  onMapReady(map: Map) {
     this.map = map;
-    // map.on({
-    //   mousemove: (e: any) => {
-    //     layer.addLatLng(e.latlng)
-    //   }
-    // })
   }
 }
