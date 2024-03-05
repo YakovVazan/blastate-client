@@ -16,7 +16,6 @@ export class MapComponent {
 
   controls = this.mapService.controls;
   layersControl = this.mapService.layersControl;
-  citiesWithAlerts: { [key: string]: number } = {};
 
   options = {
     layers: [
