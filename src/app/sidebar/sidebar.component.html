@@ -35,7 +35,7 @@
   <div class="input-group mb-3">
     <div class="form-floating">
       <input type="text" class="form-control border-secondary dropdown-toggle" id="floatingCityName"
-        data-bs-toggle="dropdown" aria-expanded="false" placeholder="City name" [value]="currentCity"
+        data-bs-toggle="dropdown" aria-expanded="false" placeholder="City name" [value]="currentCity.name"
         (input)="handleCitiesDropdownList($event)" [disabled]="allCities.length === 0">
       <label for="floatingCityName">City name</label>
       <ul
@@ -52,8 +52,15 @@
   <hr>
 </div>
 
+<div id="middle-sidebar">
+  <div class="details-container"><strong>City: </strong><span>{{currentCity.name || "--"}}</span></div>
+  <hr>
+  <div class="details-container"><strong>Alerts: </strong><span>{{currentCity.alerts || "--"}}</span></div>
+</div>
+
 <div id="lower-sidebar">
   <!-- reset -->
+  <hr>
   <button class="btn btn-outline-secondary reset-map" (click)="resetMap()">
     <span>reset</span>
   </button>

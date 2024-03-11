@@ -4,6 +4,19 @@
     justify-content: center;
 }
 
+#middle-sidebar {
+    border: 1px solid #7a848e;
+    border-radius: 0.5rem;
+    padding: 0.5em;
+    color: #7a848e;
+}
+
+.details-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
 .reset-map {
     width: 100%;
     display: flex;

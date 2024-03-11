@@ -12,7 +12,10 @@ import API_BASE_URL from '../utils/constant';
   styleUrl: './sidebar.component.css',
 })
 export class SidebarComponent implements OnInit {
-  currentCity: string = '';
+  currentCity: { name: string; alerts: number } = {
+    name: '',
+    alerts: 0,
+  };
   allCities: CitiesInterface[] = [];
   citiesForDropdown: CitiesInterface[] = [];
   controls = this.mapService.controls;
@@ -54,9 +57,9 @@ export class SidebarComponent implements OnInit {
   }
 
   handleChosenCity(city: CitiesInterface) {
-    this.currentCity = city.hebName;
+    this.currentCity.name = city.hebName;
     this.citiesForDropdown = this.allCities.filter(
-      (city) => city.hebName === this.currentCity
+      (city) => city.hebName === this.currentCity.name
     );
     this.flyToCity(city);
 
@@ -76,7 +79,7 @@ export class SidebarComponent implements OnInit {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        this.currentCity.alerts = data;
       });
   }
 
@@ -94,7 +97,7 @@ export class SidebarComponent implements OnInit {
   }
 
   goToUserLocation() {
-    this.currentCity = 'Your location';
+    this.currentCity.name = 'Your location';
     this.citiesForDropdown = this.allCities;
     this.locationService
       .getLocation()
@@ -108,7 +111,7 @@ export class SidebarComponent implements OnInit {
   }
 
   resetMap() {
-    this.currentCity = '';
+    this.currentCity = { name: '', alerts: 0 };
     this.citiesForDropdown = this.allCities;
 
     this.mapService.controls.zoom = 5;
