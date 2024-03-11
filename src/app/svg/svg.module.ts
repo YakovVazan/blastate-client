@@ -15,6 +15,12 @@ import { WarnComponent } from './warn/warn.component';
     WarnComponent,
   ],
   imports: [CommonModule],
-  exports: [PlusComponent, MinusComponent, CrossComponent, CheckComponent, WarnComponent],
+  exports: [
+    PlusComponent,
+    MinusComponent,
+    CrossComponent,
+    CheckComponent,
+    WarnComponent,
+  ],
 })
 export class SvgModule {}

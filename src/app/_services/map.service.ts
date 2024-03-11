@@ -1,15 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Map, circle, latLng, polygon, tileLayer } from 'leaflet';
-import { CoordsService } from './coords.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MapService {
   map: Map | null = null;
-
-  constructor(private coordsService: CoordsService) {}
-
   controls = {
     zoom: 5,
     center: latLng(32.0788043, 34.8778926),
@@ -45,19 +41,12 @@ export class MapService {
     this.controls.center = latLng(x, y);
   }
 
-  flyToCity(city: string) {
-    this.coordsService.getCoords(city).subscribe({
-      next: (data) => {
-        data.length > 0 && this.goToCoords(data[0].lat, data[0].lon);
-      },
-      error: (error) => {
-        console.error('Error:', error);
-      },
-    });
+  flyToCity(lat: string, lng: string) {
+    this.goToCoords(parseFloat(lat), parseFloat(lng));
   }
 
-  goToCoords(lat: number, lon: number) {
-    this.map?.flyTo(latLng(lat, lon), 13);
+  goToCoords(lat: number, lon: number, zoom: number = 13) {
+    this.map?.flyTo(latLng(lat, lon), zoom);
   }
 
   onMapReady(map: Map) {
