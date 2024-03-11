@@ -10,23 +10,24 @@
           {{ errorDetails }}
         </span>
       </div>
-      <div class="form-floating mb-3">
-        <input type="text" class="form-control border-secondary" id="floatingUsername" placeholder="Name" autofocus
-          (input)="setUsername($event)" required>
-        <label for="floatingUsername">name</label>
-      </div>
-      <div class="form-floating mb-3">
-        <input type="password" class="form-control border-secondary" id="floatingPassword" placeholder="password"
-          (input)="setPassword($event)" required>
-        <label for="floatingPassword">password</label>
-      </div>
-      <hr>
-      <div class="buttons-container">
-        <button class="btn btn-outline-primary" (click)="handleAuthAction()">
-          {{ isLoginPage() ? 'Login' : 'Register' }}
-        </button>
-
-      </div>
+      <form>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control border-secondary" id="floatingUsername" placeholder="Name" autofocus
+            (input)="setUsername($event)" required>
+          <label for="floatingUsername">name</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="password" class="form-control border-secondary" id="floatingPassword" placeholder="password"
+            (input)="setPassword($event)" required>
+          <label for="floatingPassword">password</label>
+        </div>
+        <hr>
+        <div class="buttons-container">
+          <button class="btn btn-outline-primary" (click)="handleAuthAction()">
+            {{ isLoginPage() ? 'Login' : 'Register' }}
+          </button>
+        </div>
+      </form>
       <hr>
       <span class="alternate">
         {{ isLoginPage() ? "Don't have an account yet?" : "Already have an account?"}}
