@@ -1,3 +1,21 @@
+#errors-box {
+  margin-bottom: 1em;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0.4em;
+}
+
+#errors-content {
+  width: 50%;
+  color: white;
+  border: 2px solid #dc3545;
+  border-radius: 10px;
+  background-color: #ec7a85;
+  text-align: center;
+  font-weight: bold;
+}
+
 .alternate {
   display: flex;
   justify-content: space-between;

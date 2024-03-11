@@ -10,6 +10,7 @@ import { TokenService } from '../_services/token.service';
 })
 export class AuthComponent {
   userDetails: { [key: string]: any } = {};
+  errorDetails: string = '';
 
   constructor(
     private navigationService: NavigationService,
@@ -47,14 +48,15 @@ export class AuthComponent {
       });
 
       if (!response.ok) {
-        console.log(await response.text());
+        throw new Error(response.statusText);
       }
 
       const data = await response.json();
 
       this.tokenService.setToken(data.access_token);
       this.navigationService.redirectToHome();
-    } catch (error) {
+    } catch (error: any) {
+      this.errorDetails = error["message"];
       console.error(error);
     }
   }

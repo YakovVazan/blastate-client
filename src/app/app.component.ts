@@ -23,6 +23,6 @@ export class AppComponent {
 
   logout(): void {
     this.tokenService.removeToken();
-    this.navigationService.redirectToHome();
+    this.navigationService.redirectToLogin();
   }
 }
