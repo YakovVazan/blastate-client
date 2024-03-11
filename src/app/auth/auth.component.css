@@ -1,0 +1,20 @@
+.alternate {
+  display: flex;
+  justify-content: space-between;
+  font-size: small;
+  width: 100%;
+}
+
+.auth-card-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100% - 50px);
+}
+
+.buttons-container {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}

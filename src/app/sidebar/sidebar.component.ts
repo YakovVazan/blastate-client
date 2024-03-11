@@ -1,8 +1,7 @@
 import { latLng } from 'leaflet';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MapService } from '../_services/map.service';
 import { LocationService } from '../_services/location.service';
-import { SynthesisService } from '../_services/synthesis.service';
 import { SynthesisData } from '../_interfaces/synthesis-data';
 
 @Component({
@@ -10,7 +9,7 @@ import { SynthesisData } from '../_interfaces/synthesis-data';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent {
   synthesizedData: SynthesisData[] = [];
   enCities: string[] = [];
   enFilteredCities: string[] = [];
@@ -19,18 +18,8 @@ export class SidebarComponent implements OnInit {
 
   constructor(
     private mapService: MapService,
-    private locationService: LocationService,
-    private synthesisService: SynthesisService
+    private locationService: LocationService
   ) {}
-
-  ngOnInit(): void {
-    this.synthesisService.getSynthesizedData().subscribe((synthesizedData) => {
-      this.synthesizedData = synthesizedData;
-      this.enFilteredCities = this.enCities = synthesizedData.map(
-        (city: { [key: string]: any }) => city['en'].trim()
-      );
-    });
-  }
 
   updateCenter(x: number, y: number) {
     this.mapService.updateCenter(x, y);

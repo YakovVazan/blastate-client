@@ -12,4 +12,12 @@ nav {
 
 a {
   color: white;
+  text-decoration: none;
+}
+
+#auth-buttons {
+  width: max-content;
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
 }

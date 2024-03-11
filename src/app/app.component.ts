@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationService } from './_services/navigation.service';
+import { TokenService } from './_services/token.service';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +8,21 @@ import { Router } from '@angular/router';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  constructor(private router: Router) {}
+  constructor(
+    private navigationService: NavigationService,
+    private tokenService: TokenService
+  ) {}
 
-  isLoginPage(): boolean {
-    return this.router.url === '/';
+  isHomePage(): boolean {
+    return this.navigationService.isHomePage();
+  }
+
+  loggedIn(): boolean {
+    return this.tokenService.getToken() !== null;
+  }
+
+  logout(): void {
+    this.tokenService.removeToken();
+    this.navigationService.redirectToHome();
   }
 }

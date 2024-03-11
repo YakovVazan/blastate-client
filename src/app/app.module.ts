@@ -10,6 +10,9 @@ import { MainComponent } from './main/main.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { routes } from './app.routes';
+import { AuthModule } from './auth/auth.module';
+import { SvgModule } from './svg/svg.module';
+import { NavigationService } from './_services/navigation.service';
 
 @NgModule({
   declarations: [AppComponent, MainComponent, MapComponent, SidebarComponent],
@@ -21,7 +24,10 @@ import { routes } from './app.routes';
     FormsModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
+    AuthModule,
+    SvgModule,
   ],
+  providers: [NavigationService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

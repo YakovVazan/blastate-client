@@ -1,7 +1,15 @@
 <div class="header">
   <nav>
-    <a *ngIf="!isLoginPage()" routerLink="/">login</a>
-    <a *ngIf="isLoginPage()" routerLink="/map" routerLinkActive="true">map</a>
+    <span *ngIf="isHomePage()">
+      <span *ngIf="!loggedIn()" id="auth-buttons">
+        <a routerLink="/auth/login">Login</a>
+        <a routerLink="/auth/register">Register</a>
+      </span>
+      <span *ngIf="loggedIn()">
+        <a routerLink="/" (click)="logout()">Logout</a>
+      </span>
+    </span>
+    <a *ngIf="!isHomePage()" routerLink="/" routerLinkActive="true">Home</a>
   </nav>
 </div>
 <router-outlet></router-outlet>
