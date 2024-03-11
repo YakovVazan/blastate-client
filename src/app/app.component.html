@@ -12,8 +12,12 @@
       </span>
       <a *ngIf="!isHomePage()" routerLink="/" routerLinkActive="true">Home</a>
     </div>
-    <div id="right-sidebar">
-      {{getUsername()}}
+    <div *ngIf="isHomePage()" id="right-sidebar">
+      <div id="username">{{getUsername()}}</div>
+      <div id="hamburger">
+        <app-hamburger></app-hamburger>
+        <app-offcanvas></app-offcanvas>
+      </div>
     </div>
   </nav>
 </div>

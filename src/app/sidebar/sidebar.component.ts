@@ -14,7 +14,7 @@ import API_BASE_URL from '../utils/constant';
 export class SidebarComponent implements OnInit {
   currentCity: { name: string; alerts: number } = {
     name: '',
-    alerts: 0,
+    alerts: -1,
   };
   allCities: CitiesInterface[] = [];
   citiesForDropdown: CitiesInterface[] = [];
@@ -97,7 +97,7 @@ export class SidebarComponent implements OnInit {
   }
 
   goToUserLocation() {
-    this.currentCity.name = 'Your location';
+    this.currentCity = { name: '', alerts: -1 };
     this.citiesForDropdown = this.allCities;
     this.locationService
       .getLocation()
@@ -111,7 +111,7 @@ export class SidebarComponent implements OnInit {
   }
 
   resetMap() {
-    this.currentCity = { name: '', alerts: 0 };
+    this.currentCity = { name: '', alerts: -1 };
     this.citiesForDropdown = this.allCities;
 
     this.mapService.controls.zoom = 5;

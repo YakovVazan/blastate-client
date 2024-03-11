@@ -26,7 +26,8 @@
       <label for="floatingLongitude">longitude</label>
     </div>
 
-    <button class="btn btn-outline-secondary" (click)="updateCenter(controls.center.lat, controls.center.lng)">
+    <button data-bs-dismiss="offcanvas" class="btn btn-outline-secondary"
+      (click)="updateCenter(controls.center.lat, controls.center.lng)">
       <app-check></app-check>
     </button>
   </div>
@@ -40,12 +41,13 @@
       <label for="floatingCityName">City name</label>
       <ul
         class="filtered-cities-dropdown dropdown-menu dropdown-menu-end {{citiesForDropdown.length === 0 && 'd-none'}}">
-        <li class="city-item-dropdown" *ngFor="let city of citiesForDropdown">
+        <li class="city-item-dropdown" data-bs-dismiss="offcanvas" *ngFor="let city of citiesForDropdown">
           <button class="dropdown-item" type="button" (click)="handleChosenCity(city)">{{ city.hebName }}</button>
         </li>
       </ul>
     </div>
-    <button type="button" class="btn btn-outline-secondary" (click)="goToUserLocation()" title="your location">
+    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas" (click)="goToUserLocation()"
+      title="your location">
       <app-cross></app-cross>
     </button>
   </div>
@@ -53,15 +55,21 @@
 </div>
 
 <div id="middle-sidebar">
-  <div class="details-container"><strong>City: </strong><span>{{currentCity.name || "--"}}</span></div>
+  <div class="details-container">
+    <strong>City: </strong>
+    <span>{{currentCity.name || "--"}}</span>
+  </div>
   <hr>
-  <div class="details-container"><strong>Alerts: </strong><span>{{currentCity.alerts || "--"}}</span></div>
+  <div class="details-container">
+    <strong>Alerts:</strong>
+    <span>{{currentCity.alerts >= 0 ? currentCity.alerts : "--"}}</span>
+  </div>
 </div>
 
 <div id="lower-sidebar">
   <!-- reset -->
   <hr>
-  <button class="btn btn-outline-secondary reset-map" (click)="resetMap()">
+  <button class="btn btn-outline-secondary reset-map" (click)="resetMap()" data-bs-dismiss="offcanvas">
     <span>reset</span>
   </button>
 </div>

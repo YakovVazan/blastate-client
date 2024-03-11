@@ -13,9 +13,10 @@ import { routes } from './app.routes';
 import { AuthModule } from './auth/auth.module';
 import { SvgModule } from './svg/svg.module';
 import { NavigationService } from './_services/navigation.service';
+import { OffcanvasComponent } from './offcanvas/offcanvas.component';
 
 @NgModule({
-  declarations: [AppComponent, MainComponent, MapComponent, SidebarComponent],
+  declarations: [AppComponent, MainComponent, MapComponent, SidebarComponent, OffcanvasComponent],
   imports: [
     CommonModule,
     RouterOutlet,

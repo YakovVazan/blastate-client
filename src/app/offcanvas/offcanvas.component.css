@@ -1,0 +1,10 @@
+.offcanvas {
+  max-width: 80%;
+}
+
+.controls {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

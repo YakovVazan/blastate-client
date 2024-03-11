@@ -27,6 +27,7 @@ export class AppComponent {
     this.tokenService.removeToken();
     this.navigationService.redirectToLogin();
     this.usersService.setUsername('');
+    this.usersService.removeUsername();
   }
 
   getUsername(): string {

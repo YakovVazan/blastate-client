@@ -8,9 +8,14 @@ export class UsersService {
 
   setUsername(username: string) {
     this.username = username;
+    localStorage.setItem('username', username);
   }
 
   getUsername(): string {
-    return this.username;
+    return localStorage.getItem('username') || this.username;
+  }
+
+  removeUsername(): void {
+    localStorage.removeItem('username');
   }
 }
