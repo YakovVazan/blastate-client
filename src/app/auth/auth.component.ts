@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavigationService } from '../_services/navigation.service';
 import API_BASE_URL from '../utils/constant';
 import { TokenService } from '../_services/token.service';
+import { UsersService } from '../_services/users.service';
 
 @Component({
   selector: 'app-auth',
@@ -9,12 +10,16 @@ import { TokenService } from '../_services/token.service';
   styleUrl: './auth.component.css',
 })
 export class AuthComponent {
-  userDetails: { [key: string]: any } = {};
+  userDetails: { [key: string]: string } = {
+    username: '',
+    password: '',
+  };
   errorDetails: string = '';
 
   constructor(
     private navigationService: NavigationService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private usersService: UsersService
   ) {}
 
   isLoginPage(): boolean {
@@ -54,6 +59,7 @@ export class AuthComponent {
       const data = await response.json();
 
       this.tokenService.setToken(data.access_token);
+      this.usersService.setUsername(this.userDetails['username']);
       this.navigationService.redirectToHome();
     } catch (error: any) {
       this.errorDetails = error['message'];

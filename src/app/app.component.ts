@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationService } from './_services/navigation.service';
 import { TokenService } from './_services/token.service';
+import { UsersService } from './_services/users.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,8 @@ import { TokenService } from './_services/token.service';
 export class AppComponent {
   constructor(
     private navigationService: NavigationService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private usersService: UsersService
   ) {}
 
   isHomePage(): boolean {
@@ -24,5 +26,10 @@ export class AppComponent {
   logout(): void {
     this.tokenService.removeToken();
     this.navigationService.redirectToLogin();
+    this.usersService.setUsername('');
+  }
+
+  getUsername(): string {
+    return this.usersService.getUsername();
   }
 }

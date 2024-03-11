@@ -6,8 +6,10 @@
 nav {
   height: inherit;
   display: flex;
+  justify-content: space-between;
   padding: 0 1em 0 1em;
   align-items: center;
+  color: white;
 }
 
 a {
