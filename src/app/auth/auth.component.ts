@@ -56,7 +56,7 @@ export class AuthComponent {
       this.tokenService.setToken(data.access_token);
       this.navigationService.redirectToHome();
     } catch (error: any) {
-      this.errorDetails = error["message"];
+      this.errorDetails = error['message'];
       console.error(error);
     }
   }
@@ -72,14 +72,18 @@ export class AuthComponent {
       });
 
       if (!response.ok) {
-        console.log(await response.text());
+        throw new Error(response.statusText);
       }
 
-      const data = await response.json();
-      console.log(data);
+      const responseData = await response.json();
+
+      if (responseData.error) {
+        throw new Error(responseData.error);
+      }
 
       this.navigationService.redirectToLogin();
-    } catch (error) {
+    } catch (error: any) {
+      this.errorDetails = error['message'];
       console.error(error);
     }
   }

@@ -7,13 +7,15 @@
 }
 
 #errors-content {
-  width: 50%;
+  width: 75%;
   color: white;
   border: 2px solid #dc3545;
   border-radius: 10px;
   background-color: #ec7a85;
   text-align: center;
   font-weight: bold;
+  display: flex;
+  flex-direction: column;
 }
 
 .alternate {
