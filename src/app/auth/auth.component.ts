@@ -69,6 +69,10 @@ export class AuthComponent {
 
   async register() {
     try {
+      if (!this.userDetails['username'] || !this.userDetails['password']) {
+        throw new Error('Username and password are required');
+      }
+
       const response = await fetch(`${API_BASE_URL}/users`, {
         method: 'POST',
         headers: {

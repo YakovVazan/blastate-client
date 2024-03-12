@@ -2,6 +2,14 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-cross',
+  styles: [
+    `
+      svg:hover {
+        transform: rotate(360deg);
+        transition: transform 1s ease-in-out;
+      }
+    `,
+  ],
   template: `<svg
     xmlns="http://www.w3.org/2000/svg"
     width="16"

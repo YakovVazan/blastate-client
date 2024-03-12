@@ -2,6 +2,14 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-plus',
+  styles: [
+    `
+      svg:active {
+        transform: scale(0.8);
+        transition: transform 1 ease-in-out;
+      }
+    `,
+  ],
   template: `<svg
     xmlns="http://www.w3.org/2000/svg"
     width="16"

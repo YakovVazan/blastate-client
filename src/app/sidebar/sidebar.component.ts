@@ -87,8 +87,10 @@ export class SidebarComponent implements OnInit {
     const inputElement = event.target as HTMLInputElement;
     const inputValue = inputElement.value;
 
-    this.citiesForDropdown = this.allCities.filter((city: CitiesInterface) =>
-      city.hebName.toLowerCase().includes(inputValue.toLowerCase().trim())
+    this.citiesForDropdown = this.allCities.filter(
+      (city: CitiesInterface) =>
+        city.enName.toLowerCase().includes(inputValue.toLowerCase().trim()) ||
+        city.hebName.includes(inputValue.trim())
     );
   }
 
