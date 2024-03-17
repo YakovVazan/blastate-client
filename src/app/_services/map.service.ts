@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Map, circle, latLng, polygon, tileLayer } from 'leaflet';
+import consts from '../utils/constant';
+import { AlertsService } from './alerts.service';
+import { HeatmapService } from './heatmap.service';
 
 @Injectable({
   providedIn: 'root',
@@ -7,19 +10,19 @@ import { Map, circle, latLng, polygon, tileLayer } from 'leaflet';
 export class MapService {
   map: Map | null = null;
   controls = {
-    zoom: 5,
-    center: latLng(32.0788043, 34.8778926),
+    zoom: consts.MIN_ZOOM,
+    center: latLng(consts.BASE_LAT, consts.BASE_LNG),
   };
 
   layersControl = {
     baseLayers: {
       openstreetmap: tileLayer(
         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        { maxZoom: 18 }
+        { maxZoom: consts.MAX_ZOOM }
       ),
       opencyclemap: tileLayer(
         'https://{s}.tile.opencyclemap.org/{z}/{x}/{y}.png',
-        { maxZoom: 18 }
+        { maxZoom: consts.MAX_ZOOM }
       ),
     },
     overlays: {
@@ -33,12 +36,18 @@ export class MapService {
     },
   };
 
+  constructor(private alertsService: AlertsService, private heatmapService: HeatmapService) {
+    this.alertsService.getAllAlerts().then((alerts) => {
+      this.heatmapService.setHeatLayer(this.map, alerts)
+    })
+  }
+
   updateZoom(x: number) {
     this.controls.zoom = x;
   }
 
-  updateCenter(x: number, y: number) {
-    this.controls.center = latLng(x, y);
+  updateCenter(latitude: number, longitude: number) {
+    this.controls.center = latLng(latitude, longitude);
   }
 
   flyToCity(lat: string, lng: string) {
@@ -46,7 +55,7 @@ export class MapService {
   }
 
   goToCoords(lat: number, lon: number, zoom: number = 13) {
-    this.map?.flyTo(latLng(lat, lon), zoom);
+    this.map?.setView(latLng(lat, lon), zoom);
   }
 
   onMapReady(map: Map) {

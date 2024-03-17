@@ -1,17 +1,17 @@
-import { latLng } from 'leaflet';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, Renderer2 } from '@angular/core';
 import { MapService } from '../_services/map.service';
 import { TokenService } from '../_services/token.service';
 import { LocationService } from '../_services/location.service';
 import { CitiesInterface } from '../_interfaces/cities.interface';
-import API_BASE_URL from '../utils/constant';
+import { AlertsService } from '../_services/alerts.service';
+import consts from '../utils/constant';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnDestroy {
   currentCity: { name: string; alerts: number } = {
     name: '',
     alerts: -1,
@@ -19,15 +19,23 @@ export class SidebarComponent implements OnInit {
   allCities: CitiesInterface[] = [];
   citiesForDropdown: CitiesInterface[] = [];
   controls = this.mapService.controls;
+  isSmallScreen: boolean = window.innerWidth <= 767;
+  wasSmallScreen: boolean = this.isSmallScreen;
+  maxZoom: number = consts.MAX_ZOOM;
+  minZoom: number = consts.MIN_ZOOM;
 
   constructor(
     private mapService: MapService,
     private locationService: LocationService,
-    private tokenService: TokenService
-  ) {}
+    private tokenService: TokenService,
+    private alertsService: AlertsService,
+    private renderer: Renderer2
+  ) {
+    this.getCities();
+  }
 
-  ngOnInit(): void {
-    fetch(`${API_BASE_URL}/cities`, {
+  getCities() {
+    fetch(`${consts.API_BASE_URL}/cities`, {
       headers: {
         authorization: `Bearer ${this.tokenService.getToken()}`,
       },
@@ -44,8 +52,8 @@ export class SidebarComponent implements OnInit {
       });
   }
 
-  updateCenter(x: number, y: number) {
-    this.mapService.updateCenter(x, y);
+  updateCenter(latitude: number, longitude: number) {
+    this.mapService.updateCenter(latitude, longitude);
   }
 
   increaseZoom() {
@@ -66,21 +74,8 @@ export class SidebarComponent implements OnInit {
     this.getAlertsByCity(city.hebName);
   }
 
-  getAlertsByCity(cityName: string) {
-    fetch(`${API_BASE_URL}/alerts/count/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${this.tokenService.getToken()}`,
-      },
-      body: JSON.stringify({
-        city: cityName,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        this.currentCity.alerts = data;
-      });
+  async getAlertsByCity(cityName: string) {
+    this.currentCity.alerts = await this.alertsService.getAlerts(cityName);
   }
 
   handleCitiesDropdownList(event: Event): void {
@@ -107,7 +102,7 @@ export class SidebarComponent implements OnInit {
         this.mapService.goToCoords(
           position.coords.latitude,
           position.coords.longitude,
-          18
+          consts.MAX_ZOOM
         )
       );
   }
@@ -116,7 +111,20 @@ export class SidebarComponent implements OnInit {
     this.currentCity = { name: '', alerts: -1 };
     this.citiesForDropdown = this.allCities;
 
-    this.mapService.controls.zoom = 5;
-    this.mapService.controls.center = latLng(32.0788043, 34.8778926);
+    this.mapService.updateZoom(consts.MIN_ZOOM);
+    this.mapService.updateCenter(consts.BASE_LAT, consts.BASE_LNG);
+  }
+
+  addResizeListener() {
+    this.renderer.listen(window, 'resize', () => {
+      this.isSmallScreen = window.innerWidth <= 767;
+      if (this.isSmallScreen !== this.wasSmallScreen) {
+        this.wasSmallScreen = this.isSmallScreen;
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.renderer.destroy();
   }
 }

@@ -1,13 +1,13 @@
 <div id="upper-sidebar">
   <!-- zoom -->
   <div class="input-group mb-3">
-    <button (click)="increaseZoom()" class="btn btn-outline-secondary">
+    <button (click)="increaseZoom()" class="btn btn-outline-secondary" [disabled]="controls.zoom == maxZoom">
       <app-plus></app-plus>
     </button>
     <span id="zoom-info" class="input-group-text border-secondary text-secondary">
       <span>Zoom: {{controls.zoom}}</span>
     </span>
-    <button (click)="decreaseZoom()" class="btn btn-outline-secondary">
+    <button (click)="decreaseZoom()" class="btn btn-outline-secondary" [disabled]="controls.zoom == minZoom">
       <app-minus></app-minus>
     </button>
   </div>
@@ -15,18 +15,18 @@
   <!-- latitude and longitude -->
   <div class="input-group mb-3">
     <div class="form-floating">
-      <input type="text" class="form-control border-secondary" id="floatingLatitude" placeholder="latitude"
+      <input class="form-control border-secondary" id="floatingLatitude" placeholder="latitude"
         [(ngModel)]="controls.center.lat">
       <label for="floatingLatitude">latitude</label>
     </div>
 
     <div class="form-floating">
-      <input type="text" class="form-control border-secondary" id="floatingLongitude" placeholder="longitude"
+      <input class="form-control border-secondary" id="floatingLongitude" placeholder="longitude"
         [(ngModel)]="controls.center.lng">
       <label for="floatingLongitude">longitude</label>
     </div>
 
-    <button data-bs-dismiss="offcanvas" class="btn btn-outline-secondary"
+    <button [attr.data-bs-dismiss]="isSmallScreen && 'offcanvas'" class="btn btn-outline-secondary"
       (click)="updateCenter(controls.center.lat, controls.center.lng)">
       <app-check></app-check>
     </button>
@@ -41,13 +41,14 @@
       <label for="floatingCityName">City name</label>
       <ul
         class="filtered-cities-dropdown dropdown-menu dropdown-menu-end {{citiesForDropdown.length === 0 && 'd-none'}}">
-        <li class="city-item-dropdown" data-bs-dismiss="offcanvas" *ngFor="let city of citiesForDropdown">
+        <li class="city-item-dropdown" [attr.data-bs-dismiss]="isSmallScreen && 'offcanvas'"
+          *ngFor="let city of citiesForDropdown">
           <button class="dropdown-item" type="button" (click)="handleChosenCity(city)">{{ city.hebName }}</button>
         </li>
       </ul>
     </div>
-    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas" (click)="goToUserLocation()"
-      title="your location">
+    <button type="button" class="btn btn-outline-secondary" [attr.data-bs-dismiss]="isSmallScreen && 'offcanvas'"
+      (click)="goToUserLocation()" title="your location">
       <app-cross></app-cross>
     </button>
   </div>
@@ -69,7 +70,8 @@
 <div id="lower-sidebar">
   <!-- reset -->
   <hr>
-  <button class="btn btn-outline-secondary reset-map" (click)="resetMap()" data-bs-dismiss="offcanvas">
+  <button class="btn btn-outline-secondary reset-map" (click)="resetMap()"
+    [attr.data-bs-dismiss]="isSmallScreen && 'offcanvas'">
     <span>reset</span>
   </button>
 </div>

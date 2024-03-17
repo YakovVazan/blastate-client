@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationService } from '../_services/navigation.service';
-import API_BASE_URL from '../utils/constant';
+import consts from '../utils/constant';
 import { TokenService } from '../_services/token.service';
 import { UsersService } from '../_services/users.service';
 
@@ -44,7 +44,7 @@ export class AuthComponent {
 
   async login() {
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/login`, {
+      const response = await fetch(`${consts.API_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ export class AuthComponent {
         throw new Error('Username and password are required');
       }
 
-      const response = await fetch(`${API_BASE_URL}/users`, {
+      const response = await fetch(`${consts.API_BASE_URL}/users`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
