@@ -1,9 +1,9 @@
 import { Component, OnDestroy, Renderer2 } from '@angular/core';
 import { MapService } from '../_services/map.service';
-import { TokenService } from '../_services/token.service';
+import { CitiesService } from '../_services/cities.service';
+import { AlertsService } from '../_services/alerts.service';
 import { LocationService } from '../_services/location.service';
 import { CitiesInterface } from '../_interfaces/cities.interface';
-import { AlertsService } from '../_services/alerts.service';
 import consts from '../utils/constant';
 
 @Component({
@@ -27,29 +27,16 @@ export class SidebarComponent implements OnDestroy {
   constructor(
     private mapService: MapService,
     private locationService: LocationService,
-    private tokenService: TokenService,
     private alertsService: AlertsService,
+    private citiesService: CitiesService,
     private renderer: Renderer2
   ) {
     this.getCities();
   }
 
-  getCities() {
-    fetch(`${consts.API_BASE_URL}/cities`, {
-      headers: {
-        authorization: `Bearer ${this.tokenService.getToken()}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (!data.statusCode) {
-          this.citiesForDropdown = this.allCities = data.map(
-            (city: CitiesInterface) => {
-              return city;
-            }
-          );
-        }
-      });
+  async getCities() {
+    this.citiesForDropdown = this.allCities =
+      await this.citiesService.getCities();
   }
 
   updateCenter(latitude: number, longitude: number) {
