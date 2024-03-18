@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component } from '@angular/core';
 import { Map, latLng, tileLayer } from 'leaflet';
 import { MapService } from '../_services/map.service';
 import consts from '../utils/constant';
@@ -9,7 +9,7 @@ import consts from '../utils/constant';
   styleUrl: './map.component.css',
 })
 export class MapComponent {
-  constructor(private mapService: MapService, private ngZone: NgZone) {}
+  constructor(private mapService: MapService) {}
 
   controls = this.mapService.controls;
   layersControl = this.mapService.layersControl;
@@ -28,13 +28,8 @@ export class MapComponent {
   onMapReady(map: Map) {
     this.mapService.onMapReady(map);
 
-    // Subscribe to Leaflet's move event to update the controls
     map.on('move', () => {
-      this.ngZone.run(() => {
-        const center = map.getCenter();
-        this.controls.center.lat = center.lat;
-        this.controls.center.lng = center.lng;
-      });
+      this.mapService.zone(map);
     });
   }
 }

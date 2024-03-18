@@ -36,7 +36,7 @@ export class SidebarComponent implements OnDestroy {
 
   async getCities() {
     this.citiesForDropdown = this.allCities =
-      await this.citiesService.getCities();
+      await this.citiesService.getCities();      
   }
 
   updateCenter(latitude: number, longitude: number) {
@@ -55,8 +55,8 @@ export class SidebarComponent implements OnDestroy {
     this.currentCity.name = city.hebName;
     this.citiesForDropdown = this.allCities.filter(
       (city) => city.hebName === this.currentCity.name
-    );
-    this.flyToCity(city);
+    );    
+    this.setBounds(city);
 
     this.getAlertsByCity(city.hebName);
   }
@@ -76,8 +76,8 @@ export class SidebarComponent implements OnDestroy {
     );
   }
 
-  flyToCity(city: CitiesInterface) {
-    this.mapService.flyToCity(city.lat, city.lng);
+  setBounds(city: CitiesInterface) {
+    this.mapService.setBounds(city);
   }
 
   goToUserLocation() {
@@ -98,8 +98,11 @@ export class SidebarComponent implements OnDestroy {
     this.currentCity = { name: '', alerts: -1 };
     this.citiesForDropdown = this.allCities;
 
-    this.mapService.updateZoom(consts.MIN_ZOOM);
-    this.mapService.updateCenter(consts.BASE_LAT, consts.BASE_LNG);
+    this.mapService.goToCoords(
+      consts.BASE_LAT,
+      consts.BASE_LNG,
+      consts.MIN_ZOOM
+    );
   }
 
   addResizeListener() {

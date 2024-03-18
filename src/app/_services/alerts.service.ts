@@ -7,14 +7,18 @@ import consts from '../utils/constant';
   providedIn: 'root',
 })
 export class AlertsService {
+  token = this.tokenService.getToken();
+
   constructor(private tokenService: TokenService) {}
 
   async getAlerts(cityName: string): Promise<number> {
+    if (!this.token) return -1;
+
     const response = await fetch(`${consts.API_BASE_URL}/alerts/count/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        authorization: `Bearer ${this.tokenService.getToken()}`,
+        authorization: `Bearer ${this.token}`,
       },
       body: JSON.stringify({
         city: cityName,
@@ -25,10 +29,12 @@ export class AlertsService {
   }
 
   async getAllAlerts(): Promise<heatmapDetails[]> {
+    if (!this.token) return [];
+
     const response = await fetch(`${consts.API_BASE_URL}/alerts/all/`, {
       headers: {
         'Content-Type': 'application/json',
-        authorization: `Bearer ${this.tokenService.getToken()}`,
+        authorization: `Bearer ${this.token}`,
       },
     });
     const data = await response.json();

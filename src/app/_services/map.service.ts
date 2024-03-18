@@ -1,8 +1,11 @@
-import { Injectable } from '@angular/core';
+import L from 'leaflet';
+import { Injectable, NgZone } from '@angular/core';
 import { Map, circle, latLng, polygon, tileLayer } from 'leaflet';
-import consts from '../utils/constant';
+import { TokenService } from './token.service';
 import { AlertsService } from './alerts.service';
 import { HeatmapService } from './heatmap.service';
+import { CitiesInterface } from '../_interfaces/cities.interface';
+import consts from '../utils/constant';
 
 @Injectable({
   providedIn: 'root',
@@ -36,10 +39,20 @@ export class MapService {
     },
   };
 
-  constructor(private alertsService: AlertsService, private heatmapService: HeatmapService) {
+  constructor(
+    private alertsService: AlertsService,
+    private heatmapService: HeatmapService,
+    private tokenService: TokenService,
+    private ngZone: NgZone
+  ) {
+    this.addHeatLayer();
+  }
+
+  addHeatLayer() {
     this.alertsService.getAllAlerts().then((alerts) => {
-      this.heatmapService.setHeatLayer(this.map, alerts)
-    })
+      this.tokenService.getToken() &&
+        this.heatmapService.setHeatLayer(this.map, alerts);
+    });
   }
 
   updateZoom(x: number) {
@@ -47,18 +60,34 @@ export class MapService {
   }
 
   updateCenter(latitude: number, longitude: number) {
-    this.controls.center = latLng(latitude, longitude);
+    this.controls.center.lat = latitude;
+    this.controls.center.lng = longitude;
   }
 
-  flyToCity(lat: string, lng: string) {
-    this.goToCoords(parseFloat(lat), parseFloat(lng));
+  setBounds(city: CitiesInterface) {
+    const southWest = L.latLng(+city.boundingBox[0], +city.boundingBox[2]);
+    const northEast = L.latLng(+city.boundingBox[1], +city.boundingBox[3]);
+    const bounds = L.latLngBounds(southWest, northEast);
+    const center = bounds.getCenter();
+
+    this.goToCoords(center.lat, center.lng, undefined, bounds);
   }
 
-  goToCoords(lat: number, lon: number, zoom: number = 13) {
+  goToCoords(lat: number, lon: number, zoom?: number, bounds?: L.LatLngBounds) {
     this.map?.setView(latLng(lat, lon), zoom);
+    bounds && this.map?.fitBounds(bounds);
   }
 
   onMapReady(map: Map) {
     this.map = map;
+    this.addHeatLayer();
+  }
+
+  zone(map: Map) {
+    this.ngZone.run(() => {
+      const center = map.getCenter();
+      this.controls.center.lat = center.lat;
+      this.controls.center.lng = center.lng;
+    });
   }
 }

@@ -13,9 +13,12 @@ export class CitiesService {
 
   async getCities(): Promise<CitiesInterface[]> {
     try {
+      const token = this.tokenService.getToken();
+      if (!token) return [];
+
       const response = await fetch(`${consts.API_BASE_URL}/cities`, {
         headers: {
-          authorization: `Bearer ${this.tokenService.getToken()}`,
+          authorization: `Bearer ${token}`,
         },
       });
 
