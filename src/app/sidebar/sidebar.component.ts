@@ -12,10 +12,7 @@ import consts from '../utils/constant';
   styleUrl: './sidebar.component.css',
 })
 export class SidebarComponent implements OnDestroy {
-  currentCity: { name: string; alerts: number } = {
-    name: '',
-    alerts: -1,
-  };
+  defaultCityName: string = consts.DEFAULT_CITY_NAME;
   allCities: CitiesInterface[] = [];
   citiesForDropdown: CitiesInterface[] = [];
   controls = this.mapService.controls;
@@ -23,7 +20,12 @@ export class SidebarComponent implements OnDestroy {
   wasSmallScreen: boolean = this.isSmallScreen;
   maxZoom: number = consts.MAX_ZOOM;
   minZoom: number = consts.MIN_ZOOM;
-
+  selectedDate: string = '';
+  currentCity: { name: string; alerts: number } = {
+    name: this.defaultCityName,
+    alerts: -1,
+  };
+  
   constructor(
     private mapService: MapService,
     private locationService: LocationService,
@@ -31,12 +33,13 @@ export class SidebarComponent implements OnDestroy {
     private citiesService: CitiesService,
     private renderer: Renderer2
   ) {
-    this.getCities();
+    this.getCitiesAndSumAlerts();
   }
 
-  async getCities() {
+  async getCitiesAndSumAlerts() {
+    this.currentCity.alerts = await this.mapService.addHeatLayer();
     this.citiesForDropdown = this.allCities =
-      await this.citiesService.getCities();      
+      await this.citiesService.getCities();
   }
 
   updateCenter(latitude: number, longitude: number) {
@@ -55,14 +58,20 @@ export class SidebarComponent implements OnDestroy {
     this.currentCity.name = city.hebName;
     this.citiesForDropdown = this.allCities.filter(
       (city) => city.hebName === this.currentCity.name
-    );    
+    );
     this.setBounds(city);
 
-    this.getAlertsByCity(city.hebName);
+    this.getAlertsByCity(
+      city.hebName,
+      this.selectedDate === consts.DEFAULT_CITY_NAME ? '' : this.selectedDate
+    );
   }
 
-  async getAlertsByCity(cityName: string) {
-    this.currentCity.alerts = await this.alertsService.getAlerts(cityName);
+  async getAlertsByCity(cityName: string, selectedDate: string) {
+    this.currentCity.alerts = await this.alertsService.getAlertsByCity(
+      cityName,
+      selectedDate
+    );
   }
 
   handleCitiesDropdownList(event: Event): void {
@@ -95,7 +104,9 @@ export class SidebarComponent implements OnDestroy {
   }
 
   resetMap() {
-    this.currentCity = { name: '', alerts: -1 };
+    this.selectedDate = '';
+    this.currentCity = { name: consts.DEFAULT_CITY_NAME, alerts: -1 };
+    this.getCitiesAndSumAlerts();
     this.citiesForDropdown = this.allCities;
 
     this.mapService.goToCoords(
@@ -116,5 +127,17 @@ export class SidebarComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.renderer.destroy();
+  }
+
+  onDateChange(): void {
+    if (this.currentCity.name === consts.DEFAULT_CITY_NAME) {
+      this.getByDate(this.selectedDate);
+    } else {
+      this.getAlertsByCity(this.currentCity.name, this.selectedDate);
+    }
+  }
+
+  async getByDate(date: string): Promise<void> {
+    this.currentCity.alerts = await this.mapService.addHeatLayer(date);
   }
 }

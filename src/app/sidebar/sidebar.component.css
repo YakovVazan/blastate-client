@@ -1,50 +1,75 @@
+.section-divider {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1em;
+  gap: 5px;
+  color: #4a4c4e;
+  font-weight: bold;
+  text-wrap: nowrap;
+}
+
+.input-group {
+    flex-wrap: nowrap;
+}
+
+.section-divider>* {
+    height: 100%;
+}
+
+.customized-divider {
+  width: 100%;
+  margin: 0;
+  opacity: 1;
+  border: 1px solid #a1a1a1;
+}
+
 #zoom-info {
-    flex: 1;
-    display: flex;
-    justify-content: center;
+  flex: 1;
+  display: flex;
+  justify-content: center;
 }
 
 #middle-sidebar {
-    border: 1px solid #7a848e;
-    border-radius: 0.5rem;
-    padding: 0.5em;
-    color: #7a848e;
+  border: 1px solid #7a848e;
+  border-radius: 0.5rem;
+  padding: 0.5em;
+  color: #7a848e;
 }
 
 .details-container {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .reset-map {
-    width: 100%;
-    display: flex;
-    justify-content: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .dropdown-menu {
-    max-height: 10em;
-    box-shadow: 0px 0px 10px #7a848e;
-    overflow-y: scroll;
-    padding: 0;
+  max-height: 10em;
+  box-shadow: 0px 0px 10px #7a848e;
+  overflow-y: scroll;
+  padding: 0;
 }
 
 .city-item-dropdown {
-    padding: 0.4em;
-    border-bottom: 1px solid #bcbcbc;
+  padding: 0.4em;
+  border-bottom: 1px solid #bcbcbc;
 }
 
 .city-item-dropdown:hover {
-    box-shadow: 0px 0px 8px #7a848e;
-    transition: box-shadow 0.2s ease-in-out;
-  }
+  box-shadow: 0px 0px 8px #7a848e;
+  transition: box-shadow 0.2s ease-in-out;
+}
 
 .filtered-cities-dropdown {
-    width: 100%;
+  width: 100%;
 }
 
 button {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }

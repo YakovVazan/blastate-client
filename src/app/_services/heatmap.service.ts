@@ -7,7 +7,7 @@ import { heatmapDetails } from '../_interfaces/alerts.interface';
   providedIn: 'root',
 })
 export class HeatmapService {
-  heatmapLayer: any;
+  heatmapLayer: L.HeatLayer | null = null;
 
   constructor() {}
 
@@ -21,13 +21,13 @@ export class HeatmapService {
     this.heatmapLayer = L.heatLayer(heatPoints, {
       radius: 25,
       gradient: {
-        0.1: 'yellow',
-        0.4: 'coral',
+        0.1: 'blue',
+        0.4: 'green',
         0.7: 'orange',
         1: 'red',
       },
     });
-    
+
     if (map && this.heatmapLayer) {
       this.heatmapLayer.addTo(map);
     }

@@ -1,77 +1,100 @@
-<div id="upper-sidebar">
-  <!-- zoom -->
-  <div class="input-group mb-3">
-    <button (click)="increaseZoom()" class="btn btn-outline-secondary" [disabled]="controls.zoom == maxZoom">
-      <app-plus></app-plus>
-    </button>
-    <span id="zoom-info" class="input-group-text border-secondary text-secondary">
-      <span>Zoom: {{controls.zoom}}</span>
+  <!-- map controls -->
+  <div class="sidebar-section mb-5">
+    <span class="section-divider">
+      <span>MAP ACTIONS</span>
+      <hr class="customized-divider">
     </span>
-    <button (click)="decreaseZoom()" class="btn btn-outline-secondary" [disabled]="controls.zoom == minZoom">
-      <app-minus></app-minus>
-    </button>
-  </div>
-
-  <!-- latitude and longitude -->
-  <div class="input-group mb-3">
-    <div class="form-floating">
-      <input class="form-control border-secondary" id="floatingLatitude" placeholder="latitude"
-        [(ngModel)]="controls.center.lat">
-      <label for="floatingLatitude">latitude</label>
+    <!-- zoom -->
+    <div class="input-group mb-3">
+      <button (click)="increaseZoom()" class="btn btn-outline-secondary" [disabled]="controls.zoom == maxZoom">
+        <app-plus></app-plus>
+      </button>
+      <span id="zoom-info" class="input-group-text border-secondary text-secondary">
+        <span>Zoom: {{controls.zoom}}</span>
+      </span>
+      <button (click)="decreaseZoom()" class="btn btn-outline-secondary" [disabled]="controls.zoom == minZoom">
+        <app-minus></app-minus>
+      </button>
     </div>
 
-    <div class="form-floating">
-      <input class="form-control border-secondary" id="floatingLongitude" placeholder="longitude"
-        [(ngModel)]="controls.center.lng">
-      <label for="floatingLongitude">longitude</label>
-    </div>
+    <!-- latitude and longitude -->
+    <div class="input-group">
+      <div class="form-floating">
+        <input class="form-control border-secondary" id="floatingLatitude" placeholder="latitude"
+          [(ngModel)]="controls.center.lat">
+        <label for="floatingLatitude">latitude</label>
+      </div>
 
-    <button [attr.data-bs-dismiss]="isSmallScreen && 'offcanvas'" class="btn btn-outline-secondary"
-      (click)="updateCenter(controls.center.lat, controls.center.lng)">
-      <app-check></app-check>
+      <div class="form-floating">
+        <input class="form-control border-secondary" id="floatingLongitude" placeholder="longitude"
+          [(ngModel)]="controls.center.lng">
+        <label for="floatingLongitude">longitude</label>
+      </div>
+
+      <button [attr.data-bs-dismiss]="isSmallScreen && 'offcanvas'" class="btn btn-outline-secondary"
+        (click)="updateCenter(controls.center.lat, controls.center.lng)">
+        <app-check></app-check>
+      </button>
+    </div>
+  </div>
+
+  <!-- filters -->
+  <div class="sidebar-section mb-5">
+    <span class="section-divider">
+      <span>FILTERS</span>
+      <hr class="customized-divider">
+    </span>
+    <div class="input-group mb-3">
+      <div class="form-floating">
+        <input type="text" class="form-control border-secondary dropdown-toggle" id="floatingCityName"
+          data-bs-toggle="dropdown" aria-expanded="false" placeholder="City name"
+          [value]="currentCity.name !== defaultCityName ? currentCity.name : ''"
+          (input)="handleCitiesDropdownList($event)" [disabled]="allCities.length === 0">
+        <label for="floatingCityName">City name</label>
+        <ul
+          class="filtered-cities-dropdown dropdown-menu dropdown-menu-end {{citiesForDropdown.length === 0 && 'd-none'}}">
+          <li class="city-item-dropdown" [attr.data-bs-dismiss]="isSmallScreen && 'offcanvas'"
+            *ngFor="let city of citiesForDropdown">
+            <button class="dropdown-item" type="button" (click)="handleChosenCity(city)">{{ city.hebName }}</button>
+          </li>
+        </ul>
+      </div>
+      <button type="button" class="btn btn-outline-secondary" [attr.data-bs-dismiss]="isSmallScreen && 'offcanvas'"
+        (click)="goToUserLocation()" title="your location">
+        <app-cross></app-cross>
+      </button>
+    </div>
+    <input class="form-control" type="date" min="2023-10-07" max="2024-03-04" [(ngModel)]="selectedDate"
+      (ngModelChange)="onDateChange()">
+  </div>
+
+  <!-- results -->
+  <div class="sidebar-section mb-5">
+    <span class="section-divider">
+      <span>RESULTS</span>
+      <hr class="customized-divider">
+    </span>
+    <div id="middle-sidebar">
+      <div class="details-container">
+        <strong>City: </strong>
+        <span>{{currentCity.name}}</span>
+      </div>
+      <hr>
+      <div class="details-container">
+        <strong>Alerts:</strong>
+        <span>{{currentCity.alerts >= 0 ? currentCity.alerts : "--"}}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- actions -->
+  <div id="sidebar-section">
+    <span class="section-divider">
+      <span>ACTIONS</span>
+      <hr class="customized-divider">
+    </span>
+    <button class="btn btn-outline-secondary reset-map" (click)="resetMap()"
+      [attr.data-bs-dismiss]="isSmallScreen && 'offcanvas'">
+      <span>reset</span>
     </button>
   </div>
-
-  <!-- search by city name -->
-  <div class="input-group mb-3">
-    <div class="form-floating">
-      <input type="text" class="form-control border-secondary dropdown-toggle" id="floatingCityName"
-        data-bs-toggle="dropdown" aria-expanded="false" placeholder="City name" [value]="currentCity.name"
-        (input)="handleCitiesDropdownList($event)" [disabled]="allCities.length === 0">
-      <label for="floatingCityName">City name</label>
-      <ul
-        class="filtered-cities-dropdown dropdown-menu dropdown-menu-end {{citiesForDropdown.length === 0 && 'd-none'}}">
-        <li class="city-item-dropdown" [attr.data-bs-dismiss]="isSmallScreen && 'offcanvas'"
-          *ngFor="let city of citiesForDropdown">
-          <button class="dropdown-item" type="button" (click)="handleChosenCity(city)">{{ city.hebName }}</button>
-        </li>
-      </ul>
-    </div>
-    <button type="button" class="btn btn-outline-secondary" [attr.data-bs-dismiss]="isSmallScreen && 'offcanvas'"
-      (click)="goToUserLocation()" title="your location">
-      <app-cross></app-cross>
-    </button>
-  </div>
-  <hr>
-</div>
-
-<div id="middle-sidebar">
-  <div class="details-container">
-    <strong>City: </strong>
-    <span>{{currentCity.name || "--"}}</span>
-  </div>
-  <hr>
-  <div class="details-container">
-    <strong>Alerts:</strong>
-    <span>{{currentCity.alerts >= 0 ? currentCity.alerts : "--"}}</span>
-  </div>
-</div>
-
-<div id="lower-sidebar">
-  <!-- reset -->
-  <hr>
-  <button class="btn btn-outline-secondary reset-map" (click)="resetMap()"
-    [attr.data-bs-dismiss]="isSmallScreen && 'offcanvas'">
-    <span>reset</span>
-  </button>
-</div>

@@ -11,7 +11,7 @@ export class AlertsService {
 
   constructor(private tokenService: TokenService) {}
 
-  async getAlerts(cityName: string): Promise<number> {
+  async getAlertsByCity(cityName: string, date: string): Promise<number> {
     if (!this.token) return -1;
 
     const response = await fetch(`${consts.API_BASE_URL}/alerts/count/`, {
@@ -22,13 +22,27 @@ export class AlertsService {
       },
       body: JSON.stringify({
         city: cityName,
+        targetDate: date,
       }),
     });
-    const data = await response.json();
-    return data;
+
+    return await response.json();
   }
 
-  async getAllAlerts(): Promise<heatmapDetails[]> {
+  async getAlertsByDate(date: string): Promise<any> {
+    if (!this.token) return [];
+
+    const res = await fetch(`${consts.API_BASE_URL}/alerts/all?date=${date}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${this.token}`,
+      },
+    });
+
+    return await res.json();
+  }
+
+  async getAllAlerts(): Promise<any> {
     if (!this.token) return [];
 
     const response = await fetch(`${consts.API_BASE_URL}/alerts/all/`, {
@@ -37,7 +51,7 @@ export class AlertsService {
         authorization: `Bearer ${this.token}`,
       },
     });
-    const data = await response.json();
-    return data;
+
+    return await response.json();
   }
 }

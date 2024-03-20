@@ -16,7 +16,6 @@ export class MapService {
     zoom: consts.MIN_ZOOM,
     center: latLng(consts.BASE_LAT, consts.BASE_LNG),
   };
-
   layersControl = {
     baseLayers: {
       openstreetmap: tileLayer(
@@ -44,15 +43,38 @@ export class MapService {
     private heatmapService: HeatmapService,
     private tokenService: TokenService,
     private ngZone: NgZone
-  ) {
-    this.addHeatLayer();
+  ) {}
+
+  async addHeatLayer(date?: string): Promise<number> {
+    let sumAlerts: number = 0; 
+
+    if (date) {
+      await this.alertsService.getAlertsByDate(date).then((alerts) => {
+        sumAlerts = this.updateHeatLayer(alerts);
+      });
+    } else {
+      await this.alertsService.getAllAlerts().then((alerts) => {
+        sumAlerts = this.updateHeatLayer(alerts);
+      });
+    }
+
+    return sumAlerts;
   }
 
-  addHeatLayer() {
-    this.alertsService.getAllAlerts().then((alerts) => {
-      this.tokenService.getToken() &&
-        this.heatmapService.setHeatLayer(this.map, alerts);
-    });
+  updateHeatLayer(alerts: any) {
+    this.removeOldHeatLayer();
+    this.addNewHeatLayer(alerts);
+    return alerts.sumAlerts;
+  }
+
+  removeOldHeatLayer() {
+    this.heatmapService.heatmapLayer &&
+      this.map?.removeLayer(this.heatmapService.heatmapLayer);
+  }
+
+  addNewHeatLayer(alerts: any) {
+    this.tokenService.getToken() &&
+      this.heatmapService.setHeatLayer(this.map, alerts.countsByCity);
   }
 
   updateZoom(x: number) {
@@ -80,7 +102,6 @@ export class MapService {
 
   onMapReady(map: Map) {
     this.map = map;
-    this.addHeatLayer();
   }
 
   zone(map: Map) {

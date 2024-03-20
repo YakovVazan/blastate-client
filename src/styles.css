@@ -3,6 +3,10 @@ body {
   height: 100vh;
 }
 
+input[type="date"] {
+  border-color: #6c757d;
+}
+
 @media screen and (max-width: 767px) {
   #username {
     display: none;
