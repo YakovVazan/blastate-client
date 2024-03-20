@@ -25,7 +25,7 @@ export class SidebarComponent implements OnDestroy {
     name: this.defaultCityName,
     alerts: -1,
   };
-  
+
   constructor(
     private mapService: MapService,
     private locationService: LocationService,
@@ -61,13 +61,11 @@ export class SidebarComponent implements OnDestroy {
     );
     this.setBounds(city);
 
-    this.getAlertsByCity(
-      city.hebName,
-      this.selectedDate === consts.DEFAULT_CITY_NAME ? '' : this.selectedDate
-    );
+    this.getAlertsByCity(city.hebName, this.selectedDate);
   }
 
   async getAlertsByCity(cityName: string, selectedDate: string) {
+    await this.mapService.addHeatLayer(selectedDate);
     this.currentCity.alerts = await this.alertsService.getAlertsByCity(
       cityName,
       selectedDate
