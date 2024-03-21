@@ -82,8 +82,7 @@ export class MapService {
   }
 
   updateCenter(latitude: number, longitude: number) {
-    this.controls.center.lat = latitude;
-    this.controls.center.lng = longitude;
+    this.controls.center = latLng(latitude, longitude); 
   }
 
   setBounds(city: CitiesInterface) {

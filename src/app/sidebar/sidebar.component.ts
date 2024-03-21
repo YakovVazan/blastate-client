@@ -42,7 +42,7 @@ export class SidebarComponent implements OnDestroy {
       await this.citiesService.getCities();
   }
 
-  updateCenter(latitude: number, longitude: number) {
+  updateCenter(latitude: number, longitude: number) {    
     this.mapService.updateCenter(latitude, longitude);
   }
 

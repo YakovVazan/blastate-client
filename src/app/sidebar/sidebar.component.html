@@ -32,7 +32,7 @@
       </div>
 
       <button [attr.data-bs-dismiss]="isSmallScreen && 'offcanvas'" class="btn btn-outline-secondary"
-        (click)="updateCenter(controls.center.lat, controls.center.lng)">
+        (click)="updateCenter(+controls.center.lat, +controls.center.lng)">
         <app-check></app-check>
       </button>
     </div>

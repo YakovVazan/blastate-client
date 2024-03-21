@@ -21,9 +21,9 @@ export class HeatmapService {
     this.heatmapLayer = L.heatLayer(heatPoints, {
       radius: 25,
       gradient: {
-        0.1: 'blue',
-        0.4: 'green',
-        0.7: 'orange',
+        0.1: 'yellow',
+        0.4: 'orange',
+        0.7: 'coral',
         1: 'red',
       },
     });
