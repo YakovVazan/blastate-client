@@ -42,7 +42,7 @@ export class SidebarComponent implements OnDestroy {
       await this.citiesService.getCities();
   }
 
-  updateCenter(latitude: number, longitude: number) {    
+  updateCenter(latitude: number, longitude: number) {
     this.mapService.updateCenter(latitude, longitude);
   }
 
@@ -55,7 +55,7 @@ export class SidebarComponent implements OnDestroy {
   }
 
   handleChosenCity(city: CitiesInterface) {
-    this.currentCity.name = city.hebName;
+    this.currentCity = { name: city.hebName, alerts: -1 };
     this.citiesForDropdown = this.allCities.filter(
       (city) => city.hebName === this.currentCity.name
     );
