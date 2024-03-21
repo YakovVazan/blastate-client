@@ -3,6 +3,10 @@ body {
   height: 100vh;
 }
 
+.leaflet-heatmap-layer.leaflet-layer.leaflet-zoom-animated {
+  opacity: .8;
+}
+
 input[type="date"] {
   border-color: #6c757d;
 }
