@@ -13,7 +13,7 @@
       <a *ngIf="!isHomePage()" routerLink="/" routerLinkActive="true">Home</a>
     </div>
     <div *ngIf="isHomePage()" id="right-sidebar">
-      <div id="username">{{getUsername()}}</div>
+      <div id="username">{{"Hello, " + getUsername()}}</div>
       <div id="hamburger">
         <app-hamburger></app-hamburger>
         <app-offcanvas></app-offcanvas>

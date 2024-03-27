@@ -8,6 +8,7 @@ import { heatmapDetails } from '../_interfaces/alerts.interface';
 })
 export class HeatmapService {
   heatmapLayer: L.HeatLayer | null = null;
+  radius: number = 25;
 
   constructor() {}
 
@@ -19,7 +20,7 @@ export class HeatmapService {
     ]);
 
     this.heatmapLayer = L.heatLayer(heatPoints, {
-      radius: 25,
+      radius: this.radius,
       gradient: {
         0.1: 'yellow',
         0.4: 'orange',
@@ -31,5 +32,9 @@ export class HeatmapService {
     if (map && this.heatmapLayer) {
       this.heatmapLayer.addTo(map);
     }
+  }
+
+  updateRadius(map: Map, previousZoom: number) {
+    previousZoom > map.getZoom() ? (this.radius -= 10) : (this.radius += 10);
   }
 }
