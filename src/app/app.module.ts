@@ -15,6 +15,8 @@ import { SvgModule } from './svg/svg.module';
 import { NavigationService } from './_services/navigation.service';
 import { OffcanvasComponent } from './offcanvas/offcanvas.component';
 import { AuthInterceptor } from './_interceptors/auth.interceptor';
+import { NgChartjsModule } from 'ng-chartjs';
+import { ChartComponent } from './chart/chart.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { AuthInterceptor } from './_interceptors/auth.interceptor';
     MapComponent,
     SidebarComponent,
     OffcanvasComponent,
+    ChartComponent,
   ],
   imports: [
     CommonModule,
@@ -34,6 +37,7 @@ import { AuthInterceptor } from './_interceptors/auth.interceptor';
     RouterModule.forRoot(routes),
     AuthModule,
     SvgModule,
+    NgChartjsModule,
   ],
   providers: [
     NavigationService,

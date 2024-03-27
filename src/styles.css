@@ -11,6 +11,10 @@ input[type="date"] {
   border-color: #6c757d;
 }
 
+.modal-backdrop {
+  z-index: 1050;
+}
+
 @media screen and (max-width: 767px) {
   #username {
     display: none;

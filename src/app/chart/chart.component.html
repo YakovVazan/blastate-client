@@ -1,0 +1,25 @@
+<div class="modal fade" id="metricsModal" aria-labelledby="metricsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="metricsModalLabel">
+          {{getCurrentCity().name}}
+        </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <canvas *ngIf="getIsLoaded()" ngChartjs [datasets]="getLineChartData()" [labels]="getLineChartLables()"
+          [options]="getLineChartOptions()" [chartType]="getLineChartType()">
+        </canvas>
+      </div>
+      <div class="modal-footer">
+        <div class="btn btn-outline-success">
+          <app-left></app-left>
+        </div>
+        <div class="btn btn-outline-success">
+          <app-right></app-right>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

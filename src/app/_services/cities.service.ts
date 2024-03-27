@@ -8,6 +8,10 @@ import consts from '../utils/constant';
 })
 export class CitiesService {
   cities: CitiesInterface[] = [];
+  currentCity: { name: string; alerts: number } = {
+    name: consts.DEFAULT_CITY_NAME,
+    alerts: -1,
+  };
 
   constructor(private tokenService: TokenService) {}
 
@@ -33,5 +37,9 @@ export class CitiesService {
     } catch (error) {
       throw new Error('Failed to fetch cities');
     }
+  }
+
+  setCurrentCity(name: string, alerts: number) {
+    this.currentCity = { name, alerts };
   }
 }

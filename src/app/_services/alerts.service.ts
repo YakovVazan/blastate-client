@@ -1,7 +1,8 @@
+import { Observable } from 'rxjs';
+import consts from '../utils/constant';
 import { Injectable } from '@angular/core';
 import { TokenService } from './token.service';
-import { heatmapDetails } from '../_interfaces/alerts.interface';
-import consts from '../utils/constant';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,17 @@ import consts from '../utils/constant';
 export class AlertsService {
   token = this.tokenService.getToken();
 
-  constructor(private tokenService: TokenService) {}
+  constructor(
+    private tokenService: TokenService,
+    private httpClient: HttpClient
+  ) {}
+
+  getAllAlertsByCity(city?: string): Observable<number[]> {
+    return this.httpClient.post<number[]>(
+      `${consts.API_BASE_URL}/alerts/charts_data`,
+      { city }
+    );
+  }
 
   async getAlertsByCity(cityName: string, date: string): Promise<number> {
     if (!this.token) return -1;

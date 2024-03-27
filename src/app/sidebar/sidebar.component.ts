@@ -5,6 +5,7 @@ import { AlertsService } from '../_services/alerts.service';
 import { LocationService } from '../_services/location.service';
 import { CitiesInterface } from '../_interfaces/cities.interface';
 import consts from '../utils/constant';
+import { ChartService } from '../_services/chart.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -31,6 +32,7 @@ export class SidebarComponent implements OnDestroy {
     private locationService: LocationService,
     private alertsService: AlertsService,
     private citiesService: CitiesService,
+    private chartService: ChartService,
     private renderer: Renderer2
   ) {
     this.getCitiesAndSumAlerts();
@@ -54,14 +56,15 @@ export class SidebarComponent implements OnDestroy {
     this.mapService.updateZoom(this.controls.zoom - 1);
   }
 
-  handleChosenCity(city: CitiesInterface) {
+  async handleChosenCity(city: CitiesInterface) {
     this.currentCity = { name: city.hebName, alerts: -1 };
+    this.citiesService.setCurrentCity(city.hebName, -1);
     this.citiesForDropdown = this.allCities.filter(
       (city) => city.hebName === this.currentCity.name
     );
     this.setBounds(city);
-
     this.getAlertsByCity(city.hebName, this.selectedDate);
+    this.chartService.createChart(this.currentCity.name);
   }
 
   async getAlertsByCity(cityName: string, selectedDate: string) {
@@ -105,6 +108,7 @@ export class SidebarComponent implements OnDestroy {
     this.selectedDate = '';
     this.currentCity = { name: consts.DEFAULT_CITY_NAME, alerts: -1 };
     this.getCitiesAndSumAlerts();
+    this.chartService.createChart('');
     this.citiesForDropdown = this.allCities;
 
     this.mapService.goToCoords(

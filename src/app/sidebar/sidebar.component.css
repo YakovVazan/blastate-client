@@ -42,6 +42,10 @@
   justify-content: space-between;
 }
 
+#metrics-button {
+  justify-content: center;
+}
+
 .reset-map {
   width: 100%;
   display: flex;

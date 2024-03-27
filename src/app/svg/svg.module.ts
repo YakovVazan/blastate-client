@@ -6,6 +6,9 @@ import { CrossComponent } from './cross/cross.component';
 import { CheckComponent } from './check/check.component';
 import { WarnComponent } from './warn/warn.component';
 import { HamburgerComponent } from './hamburger/hamburger.component';
+import { GraphComponent } from './graph/graph.component';
+import { LeftComponent } from './left/left.component';
+import { RightComponent } from './right/right.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +18,9 @@ import { HamburgerComponent } from './hamburger/hamburger.component';
     CheckComponent,
     WarnComponent,
     HamburgerComponent,
+    GraphComponent,
+    LeftComponent,
+    RightComponent,
   ],
   imports: [CommonModule],
   exports: [
@@ -24,6 +30,9 @@ import { HamburgerComponent } from './hamburger/hamburger.component';
     CheckComponent,
     WarnComponent,
     HamburgerComponent,
+    GraphComponent,
+    LeftComponent,
+    RightComponent,
   ],
 })
 export class SvgModule {}
