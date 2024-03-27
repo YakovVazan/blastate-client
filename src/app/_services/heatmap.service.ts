@@ -33,8 +33,4 @@ export class HeatmapService {
       this.heatmapLayer.addTo(map);
     }
   }
-
-  updateRadius(map: Map, previousZoom: number) {
-    previousZoom > map.getZoom() ? (this.radius -= 10) : (this.radius += 10);
-  }
 }

@@ -1,11 +1,11 @@
 import { Component, OnDestroy, Renderer2 } from '@angular/core';
 import { MapService } from '../_services/map.service';
+import { ChartService } from '../_services/chart.service';
 import { CitiesService } from '../_services/cities.service';
 import { AlertsService } from '../_services/alerts.service';
 import { LocationService } from '../_services/location.service';
 import { CitiesInterface } from '../_interfaces/cities.interface';
 import consts from '../utils/constant';
-import { ChartService } from '../_services/chart.service';
 
 @Component({
   selector: 'app-sidebar',
