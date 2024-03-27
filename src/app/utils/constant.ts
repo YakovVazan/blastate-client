@@ -5,4 +5,5 @@ export default {
   MIN_ZOOM: 7,
   MAX_ZOOM: 18,
   DEFAULT_CITY_NAME: 'All the Country',
+  MAX_CHART: 7
 };

@@ -67,6 +67,10 @@ export class SidebarComponent implements OnDestroy {
     this.chartService.createChart(this.currentCity.name);
   }
 
+  metricsButtonShouldBeDisabled() {
+    return this.chartService.disableMetricsButton();
+  }
+
   async getAlertsByCity(cityName: string, selectedDate: string) {
     await this.mapService.addHeatLayer(selectedDate);
     this.currentCity.alerts = await this.alertsService.getAlertsByCity(
@@ -106,7 +110,7 @@ export class SidebarComponent implements OnDestroy {
 
   resetMap() {
     this.selectedDate = '';
-    this.currentCity = { name: consts.DEFAULT_CITY_NAME, alerts: -1 };
+    this.citiesService.setCurrentCity(consts.DEFAULT_CITY_NAME, -1);
     this.getCitiesAndSumAlerts();
     this.chartService.createChart('');
     this.citiesForDropdown = this.allCities;

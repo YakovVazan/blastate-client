@@ -5,7 +5,8 @@
         <h1 class="modal-title fs-5" id="metricsModalLabel">
           {{getCurrentCity().name}}
         </h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="setIndex(0)"></button>
       </div>
       <div class="modal-body">
         <canvas *ngIf="getIsLoaded()" ngChartjs [datasets]="getLineChartData()" [labels]="getLineChartLables()"
@@ -13,10 +14,11 @@
         </canvas>
       </div>
       <div class="modal-footer">
-        <div class="btn btn-outline-success">
+        <div class="btn btn-outline-success" [class.disabled]="prevArrowShouldBeDisabled()" (click)="getPreviousWeek()" title="previous week">
           <app-left></app-left>
         </div>
-        <div class="btn btn-outline-success">
+        <span>{{(getCurrentIndex() + 1) + "/" + getDataLength()}}</span>
+        <div class="btn btn-outline-success" [class.disabled]="nextArrowShouldBeDisabled()" (click)="getNextWeek()" title="next week">
           <app-right></app-right>
         </div>
       </div>

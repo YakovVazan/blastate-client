@@ -2,6 +2,7 @@ import { ChartType } from 'chart.js/auto';
 import { Injectable } from '@angular/core';
 import { AlertsService } from './alerts.service';
 import consts from '../utils/constant';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,15 +13,29 @@ export class ChartService {
   lineChartOptions: any = {};
   lineChartType: ChartType = 'bar';
   isLoaded: boolean = false;
+  dividedChartsData: any = [];
+  index: number = 0;
 
-  constructor(private alertsService: AlertsService) {
-    this.createChart('');
+  constructor(
+    private alertsService: AlertsService,
+    private tokenService: TokenService
+  ) {
+    !this.disableMetricsButton() && this.createChart('');
   }
 
   createChart(cityName: string) {
     this.alertsService.getAllAlertsByCity(cityName).subscribe((data: any) => {
-      this.assembleChart(data);
+      this.dividedChartsData = this.groupData(data);
+      this.assembleChart(this.dividedChartsData[this.index]);
     });
+  }
+
+  groupData(data: any[]): any[] {
+    const groupedData: any[] = [];
+    for (let i = 0; i < data.length; i += consts.MAX_CHART) {
+      groupedData.push(data.slice(i, i + consts.MAX_CHART));
+    }
+    return groupedData;
   }
 
   assembleChart(data: any) {
@@ -55,5 +70,14 @@ export class ChartService {
     };
 
     this.isLoaded = true;
+  }
+
+  updateIndex(index: number) {
+    this.index = index;
+    this.assembleChart(this.dividedChartsData[this.index]);
+  }
+
+  disableMetricsButton() {
+    return this.tokenService.getToken() === null;
   }
 }

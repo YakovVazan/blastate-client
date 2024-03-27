@@ -36,4 +36,39 @@ export class ChartComponent {
   getLineChartType() {
     return this.chartService.lineChartType;
   }
+
+  prevArrowShouldBeDisabled() {
+    return this.chartService.index <= 0;
+  }
+
+  nextArrowShouldBeDisabled() {
+    return (
+      this.chartService.index >= this.chartService.dividedChartsData.length - 1
+    );
+  }
+
+  getCurrentIndex() {
+    return this.chartService.index;
+  }
+
+  getDataLength() {
+    return this.chartService.dividedChartsData.length;
+  }
+
+  getNextWeek() {
+    if (
+      this.chartService.index <
+      this.chartService.dividedChartsData.length - 1
+    )
+      this.setIndex(this.chartService.index + 1);
+  }
+
+  getPreviousWeek() {
+    if (this.chartService.index >= 0)
+      this.setIndex(this.chartService.index - 1);
+  }
+
+  setIndex(index: number) {
+    this.chartService.updateIndex(index);
+  }
 }
