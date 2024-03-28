@@ -1,5 +1,6 @@
 export default {
-  API_BASE_URL: 'http://localhost:3000',
+  //API_BASE_URL: 'http://localhost:3000',
+  API_BASE_URL: 'https://blastate-server.onrender.com',
   BASE_LAT: 31.607754150794925,
   BASE_LNG: 35.02375111754855,
   MIN_ZOOM: 7,
