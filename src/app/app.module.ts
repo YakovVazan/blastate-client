@@ -17,6 +17,7 @@ import { OffcanvasComponent } from './offcanvas/offcanvas.component';
 import { AuthInterceptor } from './_interceptors/auth.interceptor';
 import { NgChartjsModule } from 'ng-chartjs';
 import { ChartComponent } from './chart/chart.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ChartComponent } from './chart/chart.component';
     SidebarComponent,
     OffcanvasComponent,
     ChartComponent,
+    SpinnerComponent,
   ],
   imports: [
     CommonModule,

@@ -6,6 +6,7 @@ import { AlertsService } from '../_services/alerts.service';
 import { LocationService } from '../_services/location.service';
 import { CitiesInterface } from '../_interfaces/cities.interface';
 import consts from '../utils/constant';
+import { HttpService } from '../_services/http.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -33,15 +34,18 @@ export class SidebarComponent implements OnDestroy {
     private alertsService: AlertsService,
     private citiesService: CitiesService,
     private chartService: ChartService,
+    private httpService: HttpService,
     private renderer: Renderer2
   ) {
     this.getCitiesAndSumAlerts();
   }
 
   async getCitiesAndSumAlerts() {
+    this.httpService.setAppIsLoading(true);
     this.currentCity.alerts = await this.mapService.addHeatLayer();
     this.citiesForDropdown = this.allCities =
       await this.citiesService.getCities();
+    this.httpService.setAppIsLoading(false);
   }
 
   updateCenter(latitude: number, longitude: number) {
@@ -72,11 +76,13 @@ export class SidebarComponent implements OnDestroy {
   }
 
   async getAlertsByCity(cityName: string, selectedDate: string) {
+    this.httpService.setAppIsLoading(true);
     await this.mapService.addHeatLayer(selectedDate);
     this.currentCity.alerts = await this.alertsService.getAlertsByCity(
       cityName,
       selectedDate
     );
+    this.httpService.setAppIsLoading(false);
   }
 
   handleCitiesDropdownList(event: Event): void {
@@ -148,6 +154,8 @@ export class SidebarComponent implements OnDestroy {
   }
 
   async getByDate(date: string): Promise<void> {
+    this.httpService.setAppIsLoading(true);
     this.currentCity.alerts = await this.mapService.addHeatLayer(date);
+    this.httpService.setAppIsLoading(false);
   }
 }
