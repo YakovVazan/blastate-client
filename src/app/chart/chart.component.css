@@ -10,3 +10,17 @@
 .modal-footer {
   justify-content: space-between;
 }
+
+#metricsModalLabel {
+  display: flex;
+  gap: 0.3em;
+}
+
+#graph-container {
+  display: flex;
+  align-items: center;
+}
+
+#graph {
+  display: flex;
+}
