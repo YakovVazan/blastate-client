@@ -3,17 +3,17 @@
     <div id="left-sidebar">
       <span *ngIf="isHomePage()">
         <span *ngIf="!loggedIn()" id="auth-buttons">
-          <a routerLink="/auth/login">Login</a>
-          <a routerLink="/auth/register">Register</a>
+          <a routerLink="/auth/login" class="btn btn-secondary">Login</a>
+          <a routerLink="/auth/register" class="btn btn-secondary">Register</a>
         </span>
         <span *ngIf="loggedIn()">
-          <a routerLink="/" (click)="logout()">Logout</a>
+          <a routerLink="/" (click)="logout()" class="btn btn-secondary">Logout</a>
         </span>
       </span>
-      <a *ngIf="!isHomePage()" routerLink="/" routerLinkActive="true">Home</a>
+      <a *ngIf="!isHomePage()" routerLink="/" routerLinkActive="true" class="btn btn-secondary">Home</a>
     </div>
     <div *ngIf="isHomePage()" id="right-sidebar">
-      <div id="username">{{"Hello, " + getUsername()}}</div>
+      <div *ngIf="loggedIn()" id="username">{{"Hello, " + getUsername()}}</div>
       <div id="hamburger">
         <app-hamburger></app-hamburger>
         <app-offcanvas></app-offcanvas>
