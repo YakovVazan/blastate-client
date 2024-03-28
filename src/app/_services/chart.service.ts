@@ -26,7 +26,7 @@ export class ChartService {
   createChart(cityName: string) {
     this.alertsService.getAllAlertsByCity(cityName).subscribe((data: any) => {
       this.dividedChartsData = this.groupData(data);
-      this.assembleChart(this.dividedChartsData[this.index]);
+      this.assembleChart(this.dividedChartsData[this.index] || []);
     });
   }
 
@@ -74,7 +74,7 @@ export class ChartService {
 
   updateIndex(index: number) {
     this.index = index;
-    this.assembleChart(this.dividedChartsData[this.index]);
+    this.assembleChart(this.dividedChartsData[this.index] || []);
   }
 
   disableMetricsButton() {

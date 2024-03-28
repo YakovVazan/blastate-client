@@ -1,3 +1,12 @@
+.modal.fade .modal-dialog {
+  transform: scale(0.8);
+  transition: transform 0.1s ease-out;
+}
+
+.modal.fade.show .modal-dialog {
+  transform: scale(1);
+}
+
 .modal-footer {
-    justify-content: space-between;
+  justify-content: space-between;
 }

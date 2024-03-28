@@ -111,6 +111,10 @@ export class SidebarComponent implements OnDestroy {
   resetMap() {
     this.selectedDate = '';
     this.citiesService.setCurrentCity(consts.DEFAULT_CITY_NAME, -1);
+    this.currentCity = {
+      name: this.defaultCityName,
+      alerts: -1,
+    };
     this.getCitiesAndSumAlerts();
     this.chartService.createChart('');
     this.citiesForDropdown = this.allCities;
