@@ -8,8 +8,6 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class AlertsService {
-  token = this.tokenService.getToken();
-
   constructor(
     private tokenService: TokenService,
     private httpClient: HttpClient
@@ -23,13 +21,13 @@ export class AlertsService {
   }
 
   async getAlertsByCity(cityName: string, date: string): Promise<number> {
-    if (!this.token) return -1;
+    if (!this.tokenService.getToken()) return -1;
 
     const response = await fetch(`${consts.API_BASE_URL}/alerts/count/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        authorization: `Bearer ${this.token}`,
+        authorization: `Bearer ${this.tokenService.getToken()}`,
       },
       body: JSON.stringify({
         city: cityName,
@@ -41,12 +39,12 @@ export class AlertsService {
   }
 
   async getAlertsByDate(date: string): Promise<any> {
-    if (!this.token) return [];
+    if (!this.tokenService.getToken()) return [];
 
     const res = await fetch(`${consts.API_BASE_URL}/alerts/all?date=${date}`, {
       headers: {
         'Content-Type': 'application/json',
-        authorization: `Bearer ${this.token}`,
+        authorization: `Bearer ${this.tokenService.getToken()}`,
       },
     });
 
@@ -54,12 +52,12 @@ export class AlertsService {
   }
 
   async getAllAlerts(): Promise<any> {
-    if (!this.token) return [];
+    if (!this.tokenService.getToken()) return [];
 
     const response = await fetch(`${consts.API_BASE_URL}/alerts/all/`, {
       headers: {
         'Content-Type': 'application/json',
-        authorization: `Bearer ${this.token}`,
+        authorization: `Bearer ${this.tokenService.getToken()}`,
       },
     });
 
