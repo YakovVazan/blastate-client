@@ -11,7 +11,9 @@ export class ChartComponent {
   constructor(
     private chartService: ChartService,
     private citiesService: CitiesService
-  ) {}
+  ) {
+    this.chartService.createChart('');
+  }
 
   getCurrentCity() {
     return this.citiesService.currentCity;
