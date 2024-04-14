@@ -55,9 +55,6 @@ export class AuthComponent {
         body: JSON.stringify(this.userDetails),
       });
 
-      console.log(response);
-      
-
       if (!response.ok) {
         throw new Error(response.statusText);
       }
@@ -68,7 +65,7 @@ export class AuthComponent {
       this.usersService.setUsername(this.userDetails['username']);
       this.navigationService.redirectToHome();
     } catch (error: any) {
-      this.errorDetails = error['message'];
+      this.errorDetails = 'Error';
       console.error(error);
     } finally {
       this.httpService.setAppIsLoading(false);
