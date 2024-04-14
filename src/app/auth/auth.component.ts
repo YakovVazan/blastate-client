@@ -55,6 +55,9 @@ export class AuthComponent {
         body: JSON.stringify(this.userDetails),
       });
 
+      console.log(response);
+      
+
       if (!response.ok) {
         throw new Error(response.statusText);
       }
