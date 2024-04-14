@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavigationService } from '../_services/navigation.service';
-import consts from '../utils/constant';
 import { TokenService } from '../_services/token.service';
 import { UsersService } from '../_services/users.service';
+import { NavigationService } from '../_services/navigation.service';
+import consts from '../utils/constant';
+import { HttpService } from '../_services/http.service';
 
 @Component({
   selector: 'app-auth',
@@ -19,7 +20,8 @@ export class AuthComponent {
   constructor(
     private navigationService: NavigationService,
     private tokenService: TokenService,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private httpService: HttpService
   ) {}
 
   isLoginPage(): boolean {
@@ -35,6 +37,7 @@ export class AuthComponent {
   }
 
   handleAuthAction() {
+    this.httpService.setAppIsLoading(true);
     if (this.isLoginPage()) {
       this.login();
     } else {
@@ -64,6 +67,8 @@ export class AuthComponent {
     } catch (error: any) {
       this.errorDetails = error['message'];
       console.error(error);
+    } finally {
+      this.httpService.setAppIsLoading(false);
     }
   }
 
@@ -95,6 +100,8 @@ export class AuthComponent {
     } catch (error: any) {
       this.errorDetails = error['message'];
       console.error(error);
+    } finally {
+      this.httpService.setAppIsLoading(false);
     }
   }
 }
